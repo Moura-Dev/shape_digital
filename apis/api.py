@@ -58,12 +58,12 @@ def insert_vessel():
         code = request_json.get("code")
 
         if not code:
-            return {"message": "Code Required"}, 400
+            return {"message": "MISSING_PARAMETER"}, 400
 
         exists = vessel.query.filter(vessel.code == code).first()
 
         if exists:
-            return {"message": "Vessel already exists"}, 409
+            return {"message": "FAIL"}, 409
 
         new_vessel = vessel(code=code)
         db.session.add(new_vessel)
@@ -145,7 +145,7 @@ def insert_equipment():
       400:
         description: Error
       409:
-        description: Equipment already exists
+        description: FAIL
 
     """
     try:
@@ -161,9 +161,12 @@ def insert_equipment():
         code = request_json.get("code")
         location = request_json.get("location")
         vessel_id = request_json.get("vessel_id")
+        if not name or not code or not location or not vessel_id:
+            return {"message": "MISSING_PARAMETER"}, 400
+
         exists = equipment.query.filter(equipment.code == code).first()
         if exists:
-            return {"message": "Equipment already exists"}, 409
+            return {"message": "FAIL"}, 409
         new_equipment = equipment(
             name=name, code=code, location=location, vessel_id=vessel_id
         )
