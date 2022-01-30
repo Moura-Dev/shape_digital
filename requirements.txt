@@ -7,3 +7,4 @@ pandas==1.2.5
 python-dotenv
 flasgger==0.9.5
 pytest==6.2.4
+Flask-Logging==0.1.3

@@ -1,9 +1,9 @@
-FROM python:latest
+FROM python:3.8
 
 # Setup all python related enviroment
 ENV PYTHONUNBUFFERED 1
 RUN apt-get -y update
-RUN apt-get install -y python python-pip python-dev python-psycopg2 postgresql-client
+RUN apt-get install -y python python3-pip python3-dev python3-psycopg2 postgresql-client
 
 # Set the working directory
 RUN mkdir /app
