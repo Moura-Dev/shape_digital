@@ -109,6 +109,9 @@ def insert_cost():
         code = request_json.get("code")
         type_ = request_json.get("type")
         cost = request_json.get("cost")
+        if not code or not type or not cost:
+            return {"message": "MISSING_PARAMETER"}, 400
+
         new_cost = equipment_cost(equipment_code=code, type_=type_, cost=cost)
         db.session.add(new_cost)
         db.session.commit()
@@ -202,6 +205,8 @@ def update_equipment_status():
     try:
         data = request.args
         codes = data.get("code")
+        if not codes:
+            return {"message": "MISSING_PARAMETER"}, 400
         list_codes = codes.split(",")
         for n in list_codes:
             query = equipment.query.filter(equipment.code == n).first()
@@ -242,6 +247,8 @@ def active_equipment():
         list_equipments = []
         args = request.args
         code = args.get("code")
+        if not code:
+            return {"message": "MISSING_PARAMETER"}, 400
         equipments = (
             equipment.query.join(vessel)
             .filter(vessel.code == code, equipment.active == True)
@@ -290,6 +297,9 @@ def equipment_cost_total():
         args = request.args
         code = args.get("code")
         name = args.get("name")
+
+        if not code or not name:
+            return {"message": "MISSING_PARAMETER"}, 400
 
         if name:
             costs_equipment = (
@@ -341,6 +351,9 @@ def vessel_cost_average():
         costs = []
         args = request.args
         code = args.get("code")
+
+        if not code:
+            return {"message": "MISSING_PARAMETER"}, 400
 
         average_vessels = (
             equipment_cost.query.join(equipment)
