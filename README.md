@@ -1,4 +1,3 @@
-# Shape data challenge
 ### Necessary to run the project
 To run this project is necessary to have docker and docker-compose
 
